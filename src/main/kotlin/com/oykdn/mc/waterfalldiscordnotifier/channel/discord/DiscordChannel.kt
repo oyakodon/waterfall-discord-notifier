@@ -12,7 +12,9 @@ import java.time.ZoneId
 
 class DiscordChannel(
     config: Config,
-) : Discord(config) {
+) : Discord(
+    config.isDebug, config.discordWebhookId, config.discordWebhookToken
+) {
     companion object {
         const val URL_AVATAR_HEAD = "https://crafatar.com/renders/head/"
     }
@@ -28,9 +30,7 @@ class DiscordChannel(
         // Leftイベント以外は移動先のサーバ情報も付ける
         val fields = listOfNotNull(n.to?.let {
             DiscordWebhookEmbedField(
-                "サーバ",
-                "`$it`",
-                true
+                "サーバ", "`$it`", true
             )
         })
 

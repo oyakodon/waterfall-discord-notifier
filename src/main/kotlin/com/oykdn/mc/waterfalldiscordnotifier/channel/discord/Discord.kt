@@ -1,7 +1,6 @@
 package com.oykdn.mc.waterfalldiscordnotifier.channel.discord
 
 import com.oykdn.mc.waterfalldiscordnotifier.channel.Channel
-import com.oykdn.mc.waterfalldiscordnotifier.config.Config
 import com.oykdn.mc.waterfalldiscordnotifier.model.DiscordWebhookPayload
 import com.oykdn.mc.waterfalldiscordnotifier.model.Notification
 import net.md_5.bungee.api.ProxyServer
@@ -11,7 +10,9 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
 abstract class Discord(
-    private val config: Config,
+    private val isDebug: Boolean,
+    private val webhookId: String,
+    private val webhookToken: String,
 ) : Channel {
     companion object {
         private const val BASE_URL = "https://discord.com/api/webhooks/"
@@ -28,7 +29,7 @@ abstract class Discord(
     private val client = OkHttpClient.Builder()
         .addInterceptor(
             HttpLoggingInterceptor()
-                .setLevel(if (config.isDebug) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE)
+                .setLevel(if (isDebug) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE)
         )
         .build()
 
@@ -40,7 +41,7 @@ abstract class Discord(
 
     fun post(message: DiscordWebhookPayload) {
         // 必要な設定がない場合は何もしない
-        if (config.discordWebhookId.isEmpty() || config.discordWebhookToken.isEmpty()) {
+        if (webhookId.isEmpty() || webhookToken.isEmpty()) {
             logger.warning("discord: webhook id/token are invalid.")
             return
         }
@@ -51,8 +52,8 @@ abstract class Discord(
             retrofit
                 .create(DiscordWebhookService::class.java)
                 .post(
-                    config.discordWebhookId,
-                    config.discordWebhookToken,
+                    webhookId,
+                    webhookToken,
                     message
                 ).execute()
         }.apply {
