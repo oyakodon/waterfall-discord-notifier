@@ -1,0 +1,4 @@
+name: waterfall-discord-notifier
+main: com.oykdn.mc.waterfalldiscordnotifier.NotifierPlugin
+version: 1.0.0
+author: Oyakodon
