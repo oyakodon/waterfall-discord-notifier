@@ -23,8 +23,7 @@ class NotifierPlugin : Plugin() {
         val config = loadConfig()
 
         val notifier = PlayerEventNotifier(
-            config,
-            listOf(DiscordChannel(config))
+            config, listOf(DiscordChannel(config))
         )
         proxy.pluginManager.registerListener(
             this, BungeePlayerEventListener(notifier)
@@ -44,23 +43,20 @@ class NotifierPlugin : Plugin() {
                     dataFolder, CONFIG_PATH
                 )
             )
-        }.fold(
-            onSuccess = { it },
-            onFailure = {
-                if (!dataFolder.exists()) {
-                    dataFolder.mkdir()
-                }
-
-                val configuration = Config.default()
-                ConfigurationProvider.getProvider(YamlConfiguration::class.java).save(
-                    configuration, File(
-                        dataFolder, CONFIG_PATH
-                    )
-                )
-
-                configuration
+        }.fold(onSuccess = { it }, onFailure = {
+            if (!dataFolder.exists()) {
+                dataFolder.mkdir()
             }
-        )
+
+            val configuration = Config.default()
+            ConfigurationProvider.getProvider(YamlConfiguration::class.java).save(
+                configuration, File(
+                    dataFolder, CONFIG_PATH
+                )
+            )
+
+            configuration
+        })
 
         return Config.parse(yamlConfig)
     }

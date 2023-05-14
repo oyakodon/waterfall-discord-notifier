@@ -26,18 +26,12 @@ abstract class Discord(
      * okHttpクライアント
      * デバッグモードの際はボディもログ出力する。
      */
-    private val client = OkHttpClient.Builder()
-        .addInterceptor(
-            HttpLoggingInterceptor()
-                .setLevel(if (isDebug) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE)
-        )
-        .build()
+    private val client = OkHttpClient.Builder().addInterceptor(
+        HttpLoggingInterceptor().setLevel(if (isDebug) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE)
+    ).build()
 
-    private val retrofit: Retrofit = Retrofit.Builder()
-        .baseUrl(BASE_URL)
-        .addConverterFactory(MoshiConverterFactory.create())
-        .client(client)
-        .build()
+    private val retrofit: Retrofit =
+        Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(MoshiConverterFactory.create()).client(client).build()
 
     fun post(message: DiscordWebhookPayload) {
         // 必要な設定がない場合は何もしない
@@ -49,13 +43,9 @@ abstract class Discord(
         // POST処理
         // エラーの場合はログに出力
         runCatching {
-            retrofit
-                .create(DiscordWebhookService::class.java)
-                .post(
-                    webhookId,
-                    webhookToken,
-                    message
-                ).execute()
+            retrofit.create(DiscordWebhookService::class.java).post(
+                webhookId, webhookToken, message
+            ).execute()
         }.apply {
             onSuccess {
                 if (!it.isSuccessful) {

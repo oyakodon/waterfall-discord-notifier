@@ -10,8 +10,7 @@ import retrofit2.http.Path
 
 interface DiscordWebhookService {
     @Headers(
-        "Accept: application/json",
-        "Content-type: application/json"
+        "Accept: application/json", "Content-type: application/json"
     )
     @POST("{id}/{token}")
     fun post(
