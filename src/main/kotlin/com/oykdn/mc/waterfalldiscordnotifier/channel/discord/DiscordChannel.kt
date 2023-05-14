@@ -1,6 +1,6 @@
 package com.oykdn.mc.waterfalldiscordnotifier.channel.discord
 
-import com.oykdn.mc.waterfalldiscordnotifier.config.Config
+import com.oykdn.mc.waterfalldiscordnotifier.config.ConfigLoader
 import com.oykdn.mc.waterfalldiscordnotifier.model.DiscordWebhookEmbed
 import com.oykdn.mc.waterfalldiscordnotifier.model.DiscordWebhookEmbedField
 import com.oykdn.mc.waterfalldiscordnotifier.model.DiscordWebhookEmbedThumbnail
@@ -11,9 +11,9 @@ import java.time.OffsetDateTime
 import java.time.ZoneId
 
 class DiscordChannel(
-    config: Config,
+    config: ConfigLoader,
 ) : Discord(
-    config.isDebug, config.discordWebhookId, config.discordWebhookToken
+    config.get().isDebug, config.get().discordWebhookId, config.get().discordWebhookToken
 ) {
     companion object {
         const val URL_AVATAR_HEAD = "https://crafatar.com/renders/head/"

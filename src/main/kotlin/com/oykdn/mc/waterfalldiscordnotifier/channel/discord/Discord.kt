@@ -10,7 +10,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
 abstract class Discord(
-    private val isDebug: Boolean,
+    isDebug: Boolean,
     private val webhookId: String,
     private val webhookToken: String,
 ) : Channel {

@@ -1,7 +1,7 @@
 package com.oykdn.mc.waterfalldiscordnotifier.listener
 
 import com.oykdn.mc.waterfalldiscordnotifier.channel.Channel
-import com.oykdn.mc.waterfalldiscordnotifier.config.Config
+import com.oykdn.mc.waterfalldiscordnotifier.config.ConfigLoader
 import com.oykdn.mc.waterfalldiscordnotifier.model.Notification
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -10,7 +10,7 @@ import kotlinx.coroutines.withContext
 import net.md_5.bungee.api.ProxyServer
 
 class PlayerEventNotifier(
-    private val config: Config,
+    private val config: ConfigLoader,
     private val channels: List<Channel>,
 ) : Notifier {
     private val logger = ProxyServer.getInstance().logger
@@ -21,7 +21,7 @@ class PlayerEventNotifier(
     }
 
     override fun send(n: Notification) {
-        if (!config.enabled) {
+        if (!config.get().enabled) {
             logger.warning("notifier: DISABLED in config, nothing sent.")
             return
         }
