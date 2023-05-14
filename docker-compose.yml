@@ -1,0 +1,41 @@
+version: '3'
+
+x-paper: &paper
+  build:
+    context: ./docker
+    args:
+      - JDK_VER=17
+      - DIST=papermc
+      - VERSION=1.19.4
+      - BUILD=530
+  platform: linux/amd64
+  command: >
+    sh -c "echo 'eula=true' > eula.txt &&
+      echo 'settings.bungeecord: true' >> spigot.yml &&
+      echo 'enforce-secure-profile=false' >> server.properties &&
+      echo 'online-mode=false' >> server.properties &&
+      echo 'difficulty=peaceful' >> server.properties &&
+      echo 'gamemode=creative' >> server.properties &&
+      java -server -Xms1024M -Xmx1024M -jar ../server.jar nogui"
+  expose:
+    - 25565
+
+services:
+  waterfall:
+    build:
+      context: ./docker
+      args:
+        - JDK_VER=17
+        - DIST=waterfall
+        - VERSION=1.19
+        - BUILD=526
+    platform: linux/amd64
+    command: java -server -Xms512M -Xmx512M -jar ../server.jar nogui
+    volumes:
+      - "./docker/config/waterfall/config.yml:/dist/server/config.yml"
+      - "./build/libs:/dist/server/plugins"
+    ports:
+      - "25565:25565"
+  
+  paper: *paper
+  paper2: *paper
