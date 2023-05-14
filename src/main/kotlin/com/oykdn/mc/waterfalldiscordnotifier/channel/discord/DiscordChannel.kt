@@ -22,9 +22,9 @@ class DiscordChannel(
     override fun send(n: Notification) {
         // イベント種別ごとにメッセージと枠の色を分ける
         val (message, color) = when (n.type) {
-            PlayerEventType.ProxyJoined -> "${n.name} がサーバに参加しました！" to 9095002
-            PlayerEventType.ServerSwitched -> "${n.name} がサーバを移動しました！" to 11395310
-            PlayerEventType.ProxyLeft -> "${n.name} がサーバから退出しました。" to 16092797
+            PlayerEventType.ProxyJoined -> "${n.name} さんがサーバに参加しました！" to 9095002
+            PlayerEventType.ServerSwitched -> "${n.name} さんがサーバを移動しました！" to 11395310
+            PlayerEventType.ProxyLeft -> "${n.name} さんがサーバから退出しました。" to 16092797
         }
 
         // Leftイベント以外は移動先のサーバ情報も付ける
