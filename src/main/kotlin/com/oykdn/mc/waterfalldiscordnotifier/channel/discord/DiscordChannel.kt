@@ -16,7 +16,7 @@ class DiscordChannel(
     config.get().isDebug, config.get().discordWebhookId, config.get().discordWebhookToken
 ) {
     companion object {
-        const val URL_AVATAR_HEAD = "https://crafatar.com/renders/head/"
+        const val URL_AVATAR = "https://crafatar.com/renders/head/%s?overlay"
     }
 
     override fun send(n: Notification) {
@@ -40,7 +40,7 @@ class DiscordChannel(
                 OffsetDateTime.now(ZoneId.of("Asia/Tokyo")).toString(),
                 color,
                 DiscordWebhookEmbedThumbnail(
-                    "$URL_AVATAR_HEAD/${n.uuid}"
+                    URL_AVATAR.format(n.uuid)
                 ),
                 fields,
             )
