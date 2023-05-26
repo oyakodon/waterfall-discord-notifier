@@ -15,10 +15,12 @@ class BungeePlayerEventListener(
      */
     @EventHandler
     fun onServerSwitch(event: ServerSwitchEvent) {
+        val serverInfo = event.player.server.info
+
         notifier.send(Notification(event.player.name,
             event.player.uniqueId,
             event.from?.let { PlayerEventType.ServerSwitched } ?: PlayerEventType.ProxyJoined,
-            event.player.server.info.name))
+            serverInfo.name, serverInfo.players.size))
     }
 
     /**
@@ -28,7 +30,7 @@ class BungeePlayerEventListener(
     fun onPlayerDisconnect(event: PlayerDisconnectEvent) {
         notifier.send(
             Notification(
-                event.player.name, event.player.uniqueId, PlayerEventType.ProxyLeft, null
+                event.player.name, event.player.uniqueId, PlayerEventType.ProxyLeft, null, null
             )
         )
     }
