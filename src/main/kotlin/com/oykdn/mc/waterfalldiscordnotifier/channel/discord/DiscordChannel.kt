@@ -36,12 +36,24 @@ class DiscordChannel(
             return
         }
 
-        // Leftイベント以外は移動先のサーバ情報も付ける
-        val fields = listOfNotNull(n.to?.let {
-            DiscordWebhookEmbedField(
-                "サーバ", "`$it`", true
+        val fields = mutableListOf<DiscordWebhookEmbedField>()
+
+        // Left以外の場合、追加情報を通知に付与
+        n.to?.let {
+            // サーバ名
+            fields.add(
+                DiscordWebhookEmbedField(
+                    "サーバ", "`$it`", true
+                )
             )
-        })
+
+            // 参加プレイヤー数
+            fields.add(
+                DiscordWebhookEmbedField(
+                    "参加プレイヤー数", "`${n.playerCountInServer}`", true
+                )
+            )
+        }
 
         val embeds = listOf(
             DiscordWebhookEmbed(
