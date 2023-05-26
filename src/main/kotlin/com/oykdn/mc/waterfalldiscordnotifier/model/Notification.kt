@@ -10,4 +10,5 @@ data class Notification(
     val uuid: UUID, // プレイヤーUUID
     val type: PlayerEventType, // イベント種別
     val to: String?, // 移動先サーバ名
+    val playerCountInServer: Int?, // サーバ内参加プレイヤー数
 )
