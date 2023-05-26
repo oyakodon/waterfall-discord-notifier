@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "com.oykdn.mc"
-version = "1.0-SNAPSHOT"
+version = "1.1-SNAPSHOT"
 
 val bungeecordVersion = "1.19-R0.1-SNAPSHOT"
 val retrofitVersion = "2.9.0"

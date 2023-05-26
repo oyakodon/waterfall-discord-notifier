@@ -1,0 +1,15 @@
+enabled: true
+debug: false
+discord:
+  webhookId: ''
+  webhookToken: ''
+message:
+  joined:
+    color: 9095002
+    template: '%s さんがサーバに参加しました！'
+  switched:
+    color: 11395310
+    template: '%s さんがサーバを移動しました！'
+  left:
+    color: 16092797
+    template: '%s さんがサーバから退出しました。'
